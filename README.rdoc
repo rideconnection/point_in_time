@@ -2,14 +2,14 @@
 
 point_in_time is a ActveRecord versioning plugin based on version_fu
 that stores old versions of model objects, and allows querying by a
-point in time.  It has only been tested with Rails 3.
+point in time.  It has only been tested with Rails 3. It currently 
+works with Postgres databases only.
 
 == Installation
 
 Add it to your Gemfile
 
   gem 'point_in_time'
-  gem 'uuidtools'
 
 == Usage
 
@@ -42,8 +42,6 @@ necessary columns to the pages table:
     end
   end
 
-Note that id has been changed to a string to hold a uuid; this is necessary because we need to know the object's id before we write it to the database.
-
 Of course if you're adding this plugin to a table with existing data, you'll probably want to set base_id = id.
 
 Now that the database tables are in place, we can fire up point_in_time.  It's quite simple:
@@ -52,7 +50,7 @@ Now that the database tables are in place, we can fire up point_in_time.  It's q
     point_in_time
   end
 
-Thats it.
+That's it.
 
 == When to Version
 
@@ -68,7 +66,7 @@ By default a new version will be saved whenever any column is changed.  However,
 
 == Author
 
-* point_in_time was hacked together by David Turner <novalis@openplans.org>. It was created for RideConnection as part of the Lowdown project.
+* point_in_time was hacked together by David Turner <novalis@openplans.org>. It was created for Ride Connection as part of the Lowdown project.
 
 * version_fu by Jordan McKible http://jordan.mckible.com, on GitHub at http://github.com/jmckible/version_fu
 
