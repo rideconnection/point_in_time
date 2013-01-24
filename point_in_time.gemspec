@@ -30,9 +30,7 @@ Gem::Specification.new do |s|
   s.test_files = [
      "test/db/database.yml",
      "test/db/schema.rb",
-     "test/fixtures/author_versions.yml",
      "test/fixtures/authors.yml",
-     "test/fixtures/page_versions.yml",
      "test/fixtures/pages.yml",
      "test/models/author.rb",
      "test/models/page.rb",
