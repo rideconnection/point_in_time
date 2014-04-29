@@ -1,6 +1,6 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rubygems'
 
 desc 'Default: run unit tests.'
@@ -22,8 +22,8 @@ begin
     gemspec.summary = "Gemified version of the point_in_time plugin"
     gemspec.description = "point_in_time is a ActveRecord versioning gem that allows point-in-time queries."
     gemspec.email = ""
-    gemspec.homepage = "https://github.com/chrispatterson/lowdown"
-    gemspec.authors = ["David Turner"]
+    gemspec.homepage = "https://github.com/rideconnection/point_in_time"
+    gemspec.authors = ["David Turner","Kevin Chambers"]
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

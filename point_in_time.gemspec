@@ -3,11 +3,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{point_in_time}
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["David Turner"]
-  s.date = %q{2010-09-01}
+  s.authors = ["David Turner","Kevin Chambers"]
+  s.date = %q{2014-04-29}
   s.description = %q{point_in_time versions your ActiveRecord models so as to allow point-in-time queries. It is based on Jordan McKible's version_fu, which is based on Rick Olson's acts_as_versioned, and which is compatible with Rails 3.}
   s.email = %q{}
   s.extra_rdoc_files = [

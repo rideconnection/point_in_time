@@ -25,17 +25,18 @@ module VersionFu
       class_eval do
         @@end_of_time = Time.utc(9999, 1, 1, 1, 1)
 
-        has_many :versions, :class_name  => self.to_s,
-                            :foreign_key => "base_id",
-                            :primary_key => "base_id",
-                            :order => "valid_start" do
+        has_many :versions, -> { order :valid_start }, {
+            :class_name  => self.to_s,
+            :foreign_key => "base_id",
+            :primary_key => "base_id"
+          } do
           def latest
-            find :last
+            last
           end                    
         end
 
-        scope :old_versions, :conditions => ["#{self.table_name}.valid_end <> ?", @@end_of_time]
-        scope :current_versions, :conditions => {:valid_end => @@end_of_time}
+        scope :old_versions, -> { where("#{self.table_name}.valid_end <> ?", @@end_of_time) }
+        scope :current_versions, -> { where(valid_end: @@end_of_time) }
 
         def self.next_val
           ActiveRecord::Base.connection.select_value("SELECT nextval('#{self.name.tableize}_id_seq')").to_i
@@ -46,14 +47,12 @@ module VersionFu
 
         # find first version before the given version
         def self.before(version)
-          find :first, :order => 'valid_start desc',
-            :conditions => ["base_id = ? and valid_start < ?", version.base_id, version.valid_start]
+          order('valid_start desc').where("base_id = ? and valid_start < ?", version.base_id, version.valid_start).first
         end
 
         # find first version after the given version.
         def self.after(version)
-          find :last, :order => 'valid_start',
-            :conditions => ["base_id = ? and valid_start > ?", version.base_id, version.valid_start]
+          order(:valid_start).where("base_id = ? and valid_start > ?", version.base_id, version.valid_start).last
         end
 
         def self.end_of_time
@@ -93,15 +92,15 @@ module VersionFu
 
     # find first version ever
     def first_version
-      versions.find :first, :conditions => ["base_id = ? and id = ?", base_id, base_id]
+      versions.where("base_id = ? and id = ?", base_id, base_id).first
     end
 
     def current_version
-      versions.find :last, :conditions => ["base_id = ? and id = ?", base_id, base_id]
+      versions.where("base_id = ? and id = ?", base_id, base_id).last
     end
 
     def find_version(date)
-      versions.find :first, :conditions=>['valid_start <= ? and valid_end > ?', date, date]
+      versions.where('valid_start <= ? and valid_end > ?', date, date).first
     end
     
     def now_rounded
